@@ -1,0 +1,101 @@
+#form {
+    height: 85vh;
+    align-content: center;
+}
+
+/* General Styles */
+body {
+    background-color: #FEF8E6; /* Lightest primary color */
+    font-family: 'Arial', sans-serif;
+    color: #03383F; /* Darkest secondary color */
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* Container */
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Card Styles */
+.card {
+    border: 1px solid #CDD7D9; /* Light secondary color */
+    border-radius: 10px;
+    background-color: #FFF;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Header */
+.card-header {
+    background-color: #03383F; /* Darkest secondary color */
+    color: #FEF8E6; /* Lightest primary color */
+    border-radius: 10px 10px 0 0;
+    padding: 15px;
+}
+
+h3 {
+    color: white;
+}
+/* Card Body */
+.card-body {
+    padding: 30px;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Form Labels */
+.form-group label {
+    font-weight: bold;
+    color: #03383F; /* Darkest secondary color */
+}
+
+/* Form Controls */
+.form-control,
+.form-control-file {
+    border-radius: 5px;
+    border: 1px solid #9FB3B3; /* Medium light secondary color */
+    padding: 10px;
+}
+
+/* Form Control Focus */
+.form-control:focus {
+    border-color: #F9972F; /* Bright primary color */
+    box-shadow: none;
+}
+
+/* Submit Button */
+.btn {
+    background-color: #03383F; /* Darkest secondary color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    color: #FEF8E6; /* Lightest primary color */
+}
+
+/* Button Hover Effect */
+.btn:hover {
+    background-color: #F9972F; /* Bright primary color */
+    color: #FFF;
+}
+
+/* Text Styles */
+.text-center {
+    text-align: center;
+    color: #03383F; /* Darkest secondary color */
+}
+
+a {
+    color: #F9972F; /* Bright primary color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

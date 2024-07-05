@@ -1,0 +1,171 @@
+/* Global Styles */
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-color: #FEF8E6; /* Light cream */
+  color: #03383F; /* Dark teal */
+}
+
+.navbar {
+  background-color: #708e8e; /* Dark teal */
+}
+
+.navbar-brand {
+  color: #FEF8E6 !important; /* Light cream */
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar-brand:hover {
+  color: #FEF8E6 !important; /* Light cream */
+}
+
+.navbar-nav .nav-link {
+  color: #FEF8E6 !important; /* Light cream */
+  margin-right: 1rem;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #FDF2CC !important; /* Light gold */
+}
+
+#hero {
+  background-color: #FDF2CC; /* Light gold */
+  height: 400px;
+}
+
+.col-md-4{
+  display: none;
+}
+
+/* Styling for all cards to ensure they have the same size */
+.card {
+  border: none;
+  transition: transform 0.2s;
+  height: 400px; /* Fixed height for uniformity */
+  box-sizing: border-box; /* Ensures padding/borders are included in height/width */
+  display: flex; /* Flexbox for content alignment */
+  flex-direction: column; /* Vertical alignment */
+  justify-content: space-between; /* Evenly space the content */
+  background-color: white; /* Background color for cards */
+  margin-top: 50px;
+}
+
+/* Hover effect for cards */
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* Image at the top of the card */
+.card-img-top {
+  width: 100%; /* Ensure image takes full width of the card */
+  height: 200px; /* Fixed height for consistency */
+  object-fit: cover; /* Maintain aspect ratio and cover the area */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Card body to hold text and titles */
+.card-body {
+  padding: 15px; /* Padding for inner spacing */
+  flex-grow: 1; /* Allow body to expand and take available space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title styling inside the card body */
+.card-title {
+  font-size: 1.2em; /* Increased font size */
+  margin-bottom: 5px; /* Margin for spacing */
+  color: #FFBC3B; /* Primary color */
+}
+
+/* Text styling inside the card body */
+.card-text {
+  font-size: 1em; /* Standard font size */
+  color: #708E8E; /* Secondary color */
+  overflow: auto;
+}
+
+/* Styling for the feature boxes */
+.feature-box {
+  background-color: #FFBC3B; /* Orange */
+  color: #03383F; /* Dark teal */
+  border-radius: 10px; /* Rounded corners */
+  margin-bottom: 20px; /* Space between feature boxes */
+  padding: 20px; /* Padding for inner spacing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Heading inside the feature boxes */
+.feature-box h3 {
+  color: #03383F; /* Dark teal */
+  font-size: 1.5em; /* Increased font size */
+}
+
+/* Ensuring container and row responsiveness */
+.container {
+  max-width: 1200px; /* Maximum width for larger screens */
+}
+
+.row {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+.footer {
+  background-color: #03383F; /* Dark teal */
+  color: #FEF8E6; /* Light cream */
+  padding: 40px 0;
+}
+
+.footer a {
+  color: #FEF8E6; /* Light cream */
+}
+
+.footer a:hover {
+  color: #FDF2CC; /* Light gold */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .navbar-nav .nav-link {
+      margin-right: 0.5rem;
+  }
+}
+
+/* Load More Button Styles */
+.btn {
+  background-color: #F9972F; /* Orange background */
+  color: #FEF8E6; /* Light beige text */
+  border: 2px solid #03383F; /* Dark teal border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for the button */
+  font-size: 1.1rem; /* Slightly larger font size */
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  display: block; /* Block level element */
+  width: fit-content; /* Fit the content */
+  margin: 20px auto; /* Center align */
+  text-align: center; /* Center text */
+}
+
+.btn:hover {
+  background-color: #03383F; /* Dark teal background on hover */
+  color: #F9972F; /* Orange text on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.btn:active {
+  transform: scale(0.95); /* Slightly shrink on active */
+}
+
+.btn:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 5px #F9972F; /* Custom focus outline */
+}

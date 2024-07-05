@@ -1,0 +1,235 @@
+Colour scheme
+COLOR
+Primary colour
+F9972F
+FFBC3B
+FDF2CC
+FEF8E6
+Secondary colour
+O3383F
+708E8E
+9FB3B3
+CDD7D9
+
+
+
+
+Topic: Online Recipe Sharing Platform
+
+ Problem Statement
+
+Create an online recipe sharing platform where users can browse, share, and review recipes. The platform should have user authentication, recipe management features for users to add, edit, or delete their own recipes, and the ability for users to leave reviews on recipes.
+
+### Requirements
+
+#### User Features
+1. **User Registration and Login**:
+    - Users should be able to create an account and log in.
+    - Authentication should be handled securely.
+
+2. **Browse Recipes**:
+    - Users should be able to browse a list of recipes.
+    - Each recipe should display its title, author, short description, and an image.
+
+3. **Search Recipes**:
+    - Users should be able to search for recipes by title or ingredients.
+
+4. **Recipe Details**:
+    - Users should be able to click on a recipe to see its detailed information, including ingredients, steps, and reviews.
+
+5. **Add, Edit, and Delete Recipes**:
+    - Authenticated users should be able to add new recipes.
+    - Users should be able to edit or delete their own recipes.
+
+6. **Leave Reviews**:
+    - Users should be able to leave reviews on recipes.
+    - Reviews should include a rating and a comment.
+
+#### Admin Features
+1. **Admin Login**:
+    - Admin should have a separate login to access the admin panel.
+
+2. **Manage Users**:
+    - Admin should be able to view, delete, or deactivate users.
+
+3. **Manage Recipes**:
+    - Admin should be able to manage all recipes, including the ability to delete any recipe.
+
+### Database Schema
+
+#### Users Table
+```sql
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    role ENUM('admin', 'user') DEFAULT 'user'
+);
+```
+
+#### Recipes Table
+```sql
+CREATE TABLE recipes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author_id INT NOT NULL,
+    description TEXT,
+    ingredients TEXT NOT NULL,
+    steps TEXT NOT NULL,
+    image VARCHAR(255),
+    FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+#### Reviews Table
+```sql
+CREATE TABLE reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    recipe_id INT,
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    comment TEXT,
+    review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE
+);
+```
+
+### Implementation Steps
+
+#### 1. Setup the Project
+- Create a project directory and set up a basic file structure.
+- Connect to the database using PHP and create the necessary tables.
+
+#### 2. User Registration and Login
+- Create user registration and login forms.
+- Implement user authentication using PHP sessions.
+
+#### 3. Recipe Browsing and Search
+- Create a page to display a list of recipes.
+- Implement search functionality to filter recipes by title or ingredients.
+
+#### 4. Recipe Details
+- Create a page to display detailed information about a recipe.
+- Include a form for leaving reviews and displaying existing reviews.
+
+#### 5. Recipe Management
+- Implement functionality for users to add new recipes.
+- Create edit and delete functionalities for users to manage their own recipes.
+
+#### 6. Reviews
+- Create functionality for users to leave a review on a recipe.
+- Display reviews and average rating on the recipe details page.
+
+#### 7. Admin Panel
+- Create an admin login page.
+- Create a dashboard for the admin to manage users and recipes.
+
+### Sample Code Snippets
+
+#### Database Connection (`dbconnect.php`)
+```php
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "recipe_platform";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+```
+
+#### User Registration (`register.php`)
+```php
+<?php
+include('dbconnect.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $email = $_POST['email'];
+
+    $sql = "INSERT INTO users (username, password, email) VALUES ('$username', '$password', '$email')";
+    if ($conn->query($sql) === TRUE) {
+        echo "Registration successful";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+?>
+
+<form method="post" action="register.php">
+    Username: <input type="text" name="username" required><br>
+    Password: <input type="password" name="password" required><br>
+    Email: <input type="email" name="email" required><br>
+    <input type="submit" value="Register">
+</form>
+```
+
+#### Recipe Listing (`index.php`)
+```php
+<?php
+include('dbconnect.php');
+
+$sql = "SELECT * FROM recipes";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo "<div class='recipe'>";
+        echo "<h2>" . $row['title'] . "</h2>";
+        echo "<p>By User ID " . $row['author_id'] . "</p>";
+        echo "<p>" . substr($row['description'], 0, 100) . "...</p>";
+        echo "<img src='images/" . $row['image'] . "' alt='" . $row['title'] . "' style='width:150px;height:150px;'>";
+        echo "<a href='recipe.php?id=" . $row['id'] . "'>View Details</a>";
+        echo "</div>";
+    }
+} else {
+    echo "No recipes found";
+}
+?>
+```
+
+#### Add Recipe (`add_recipe.php`)
+```php
+<?php
+session_start();
+include('dbconnect.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $ingredients = $_POST['ingredients'];
+    $steps = $_POST['steps'];
+    $author_id = $_SESSION['user_id'];
+    $image = $_FILES['image']['name'];
+    $target = "images/" . basename($image);
+
+    $sql = "INSERT INTO recipes (title, author_id, description, ingredients, steps, image) 
+            VALUES ('$title', '$author_id', '$description', '$ingredients', '$steps', '$image')";
+
+    if ($conn->query($sql) === TRUE) {
+        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+        echo "Recipe added successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+?>
+
+<form method="post" enctype="multipart/form-data">
+    Title: <input type="text" name="title" required><br>
+    Description: <textarea name="description" required></textarea><br>
+    Ingredients: <textarea name="ingredients" required></textarea><br>
+    Steps: <textarea name="steps" required></textarea><br>
+    Image: <input type="file" name="image" required><br>
+    <input type="submit" value="Add Recipe">
+</form>
+```
+
+This project provides a comprehensive introduction to web development using PHP and MySQL. It covers essential concepts like user authentication, CRUD operations, and file uploads, making it an excellent project for learning and enhancing your skills.
